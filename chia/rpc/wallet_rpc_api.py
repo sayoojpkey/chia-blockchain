@@ -2316,10 +2316,9 @@ class WalletRpcApi:
         if derivation_record is None:
             return {"success": False, "error": f"This DID {launcher_id} is not belong to the connected wallet"}
         else:
-            assert isinstance(derivation_record.pubkey, G1Element)
-            our_inner_puzzle: Program = self.service.wallet_state_manager.main_wallet.puzzle_for_pk(
-                derivation_record.pubkey
-            )
+            dr_pubkey = derivation_record.pubkey
+            assert isinstance(dr_pubkey, G1Element)
+            our_inner_puzzle: Program = self.service.wallet_state_manager.main_wallet.puzzle_for_pk(dr_pubkey)
             did_puzzle = DID_INNERPUZ_MOD.curry(
                 our_inner_puzzle, recovery_list_hash, num_verification, singleton_struct, metadata
             )
