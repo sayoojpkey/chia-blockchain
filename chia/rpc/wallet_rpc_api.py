@@ -2367,10 +2367,9 @@ class WalletRpcApi:
                             uint32(index), uint32(1), False
                         )
                         while derivation_record is not None:
-                            assert isinstance(derivation_record.pubkey, G1Element)
-                            our_inner_puzzle = self.service.wallet_state_manager.main_wallet.puzzle_for_pk(
-                                derivation_record.pubkey
-                            )
+                            dr_pubkey = derivation_record.pubkey
+                            assert isinstance(dr_pubkey, G1Element)
+                            our_inner_puzzle = self.service.wallet_state_manager.main_wallet.puzzle_for_pk(dr_pubkey)
                             did_puzzle = DID_INNERPUZ_MOD.curry(
                                 our_inner_puzzle, recovery_list_hash, num_verification, singleton_struct, metadata
                             )
